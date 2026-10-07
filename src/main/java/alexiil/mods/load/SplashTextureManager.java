@@ -25,6 +25,10 @@ import org.lwjgl.opengl.GL12;
 
 public class SplashTextureManager extends TextureManager {
 
+    static {
+        WebPSupport.init();
+    }
+
     private final List<ResourceTexture> ownedTextures = new ArrayList<>();
 
     public SplashTextureManager(IResourceManager resources) {
@@ -127,7 +131,7 @@ public class SplashTextureManager extends TextureManager {
 
         @Override
         public void loadTexture(IResourceManager resources) throws IOException {
-            IResource resource = resources.getResource(location);
+            IResource resource = resolveResource(resources, location);
             BufferedImage image;
             try (InputStream stream = resource.getInputStream()) {
                 image = ImageIO.read(stream);
@@ -149,6 +153,40 @@ public class SplashTextureManager extends TextureManager {
                     height,
                     metadata != null && metadata.getTextureBlur(),
                     metadata != null && metadata.getTextureClamp());
+        }
+
+        private static IResource resolveResource(IResourceManager resources, ResourceLocation location)
+                throws IOException {
+            try {
+                return resources.getResource(location);
+            } catch (IOException original) {
+                String path = location.getResourcePath();
+                if (path.endsWith(".png")) {
+                    ResourceLocation webpLoc = new ResourceLocation(
+                            location.getResourceDomain(),
+                            path.substring(0, path.length() - 4) + ".webp");
+                    try {
+                        return resources.getResource(webpLoc);
+                    } catch (IOException ignored) {}
+                } else if (path.endsWith(".webp")) {
+                    ResourceLocation pngLoc = new ResourceLocation(
+                            location.getResourceDomain(),
+                            path.substring(0, path.length() - 5) + ".png");
+                    try {
+                        return resources.getResource(pngLoc);
+                    } catch (IOException ignored) {}
+                } else {
+                    ResourceLocation webpLoc = new ResourceLocation(location.getResourceDomain(), path + ".webp");
+                    try {
+                        return resources.getResource(webpLoc);
+                    } catch (IOException ignored) {}
+                    ResourceLocation pngLoc = new ResourceLocation(location.getResourceDomain(), path + ".png");
+                    try {
+                        return resources.getResource(pngLoc);
+                    } catch (IOException ignored) {}
+                }
+                throw original;
+            }
         }
     }
 }

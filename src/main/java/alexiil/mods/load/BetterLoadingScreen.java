@@ -46,6 +46,7 @@ public class BetterLoadingScreen {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        WebPSupport.init();
         MinecraftForge.EVENT_BUS.register(instance);
         FMLCommonHandler.instance().bus().register(instance);
         meta = event.getModMetadata();

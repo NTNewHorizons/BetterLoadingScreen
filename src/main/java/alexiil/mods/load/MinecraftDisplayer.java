@@ -447,11 +447,11 @@ public class MinecraftDisplayer implements IDisplayer {
                 + "When disabled, animations update only when loading progress changes.";
         threadedRendering = cfg.getBoolean("threadedRendering", "general", threadedRendering, threadedRenderingComment);
 
-        String comment5 = "Path to background resource." + n
+        String comment5 = "Path to background resource (PNG or WebP supported)." + n
                 + "You can use a resourcepack or resource loader for custom resources.";
         background = cfg.getString("background", "layout", background, comment5);
 
-        String comment6 = "Path to logo/title resource";
+        String comment6 = "Path to logo/title resource (PNG or WebP supported)";
         title = cfg.getString("title", "layout", title, comment6);
 
         String comment7 = "Logo coordinates in image and position." + n
@@ -466,14 +466,14 @@ public class MinecraftDisplayer implements IDisplayer {
                 + "an image, a transparent one if you want even. BLS provides 'transparent.png'";
         titlePos = stringToIntArray(cfg.getString("titlePos", "layout", intArrayToString(titlePos), comment7));
 
-        String comment8 = "Path to main loading bar resource";
+        String comment8 = "Path to main loading bar resource (PNG or WebP supported)";
         progress = cfg.getString("mainProgressBar", "layout", progress, comment8);
 
         String comment9 = "Main loading bar position";
         progressPos = stringToIntArray(
                 cfg.getString("mainProgressBarPos", "layout", intArrayToString(progressPos), comment9));
 
-        String comment10 = "Path to animated main loading bar resource";
+        String comment10 = "Path to animated main loading bar resource (PNG or WebP supported)";
         progressAnimated = cfg.getString("mainProgressBarAnimated", "layout", progressAnimated, comment10);
 
         String comment11 = "Main animated loading bar position";
@@ -548,7 +548,8 @@ public class MinecraftDisplayer implements IDisplayer {
         String comment22 = "Whether display a random background from the random backgrounds list";
         randomBackgrounds = cfg.getBoolean("randomBackgrounds", "layout", randomBackgrounds, comment22);
 
-        String comment23 = "List of paths to backgrounds that will be used if randomBackgrounds is true." + n
+        String comment23 = "List of paths to backgrounds (PNG or WebP) that will be used if randomBackgrounds is true."
+                + n
                 + "The paths must be separated by commas.";
         randomBackgroundArray = parseBackgroundCFGListToArray(
                 cfg.getString(

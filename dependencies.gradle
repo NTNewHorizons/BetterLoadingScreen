@@ -2,4 +2,5 @@
 
 dependencies {
     compileOnly('com.mumfrey:liteloader:1.7.10_04:mcpnames')
+    shadowCompile('com.twelvemonkeys.imageio:imageio-webp:3.12.0')
 }

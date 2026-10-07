@@ -5,6 +5,7 @@ import java.util.Map;
 
 import alexiil.mods.load.ProgressDisplayer;
 import alexiil.mods.load.Translation;
+import alexiil.mods.load.WebPSupport;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.MCVersion("1.7.10")
@@ -28,6 +29,7 @@ public class LoadingScreenLoadPlugin implements IFMLLoadingPlugin {
 
     @Override
     public void injectData(Map<String, Object> data) {
+        WebPSupport.init();
         File coremodLocation = (File) data.get("coremodLocation");
         Translation.addTranslations(coremodLocation);
         ProgressDisplayer.start(coremodLocation);
